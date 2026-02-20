@@ -5,7 +5,7 @@
 
 **Team Name:**  
 **Members:** (Kevin Pol, Kevin_Pol@student.uml.edu)  
-**GitHub Repo URL (with GitHub usernames):** PolKevin03  Link:https://github.com/PolKevin03/NetworkDesignPhase2.git
+**GitHub Repo URL (with GitHub usernames):** PolKevin03  
 **Phase:** (2)  
 **Submission Date:*2/13/2026*  
 **Version:** (v1)
@@ -304,9 +304,10 @@ State where phase artifacts live:
 | Packet format + encode/decode | Kevin Pol | 2/20 | packet built |
 | Sender logic | Kevin Pol | 2/20 | sender has RDT rules |
 | Receiver logic | Kevin Pol | 2/20 | Receiver write output |
-| Injection (if required) | Kevin Pol | 2/20 | ack corruption work |
-| Figures/plots (if required) | Kevin Pol | 2/20 | save in result the plots |
-| README + reproducibility |Kevin Pol  | 2/20 | instructions |
+| Option 2/ ACK biterror | Odey Khello | 2/20 | ACK corruption at sender causes resend + recovery |
+| Option 3/Injection (if required) | Andrew Thach | 2/20 | ack corruption work |
+| Figures/plots (if required) | Andrew Thach | 2/20 | save in result the plots |
+| README + reproducibility | All | 2/20 | instructions |
 
 ### 10.2 Milestones (keep it realistic)
 - Milestone 1:Packet format and checksum planned.
