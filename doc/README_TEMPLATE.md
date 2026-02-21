@@ -17,7 +17,9 @@ mechanisms and performance evaluation.
 ## Demo Video (submission)
 - **Private YouTube link:** *(submit via Blackboard)*  
 - **Timestamped outline:** *(mm:ss → scenario)*
-
+00:00 to 00:30 →option 1
+00:31 to 01:17 →option 2
+01:18 to 1:54 →option 3
 ---
 
 ## Repository Structure (required)
