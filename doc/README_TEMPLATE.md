@@ -157,6 +157,7 @@ List any limitations honestly.
 - port number were mixed up becuase teammates used different which held us back a bit
 - spacing was always an issue for us
 - this works with 1 client at a time
+- another issue was the data record time/completion wasn't recorded weirdly for some reason, we couldn't get it to work
 ---
 
 ## Academic Integrity / External Tools
