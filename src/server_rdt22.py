@@ -1,5 +1,41 @@
 from socket import * #import udp socket functions
-from rdt_utils import * #import packet utilities and constants
+import struct
+import zlib
+
+#packet types
+DATA = 0
+ACK = 1
+END = 2
+
+#header format
+HEADER_FMT = "!BBHI"
+HEADER_LEN = struct.calcsize(HEADER_FMT)
+
+
+def compute_checksum(data_bytes): #checksum
+    return zlib.crc32(data_bytes) & 0xffffffff
+
+def make_packet(ptype, seq, payload=b""): #build packet
+    length = len(payload)
+    checksum = 0
+    header = struct.pack(HEADER_FMT, ptype, seq, length, checksum)
+    checksum = compute_checksum(header + payload)
+    header = struct.pack(HEADER_FMT, ptype, seq, length, checksum)
+    return header + payload
+
+def parse_packet(packet_bytes): #parse packet
+    header = packet_bytes[:HEADER_LEN]
+    payload = packet_bytes[HEADER_LEN:]
+
+    ptype, seq, length, checksum = struct.unpack(HEADER_FMT, header)
+
+    header_zero = struct.pack(HEADER_FMT, ptype, seq, length, 0)
+    calc_checksum = compute_checksum(header_zero + payload)
+
+    corrupt = (calc_checksum != checksum)
+
+    return ptype, seq, payload, corrupt
+
 
 serverPort = 13000#udp port
 CHUNK = 1024 #max size
@@ -27,7 +63,7 @@ while True:  #receive
         outfile.write(payload)  #write to file
         ackpkt = make_packet(ACK, seq, b"")  #build ack 
         serverSocket.sendto(ackpkt, clientAddress) #send ack
-        expected_seq = 1 - expected_seq #seq
+        expected_seq = 1 - expected_seq #seq toggle
     else:
         last_good = 1 - expected_seq  #last correctly received seq
         ackpkt = make_packet(ACK, last_good, b"") 
