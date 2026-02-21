@@ -1,4 +1,4 @@
-# Network Design Project – Team ____
+# Network Design Project – Team KOA
 
 <!-- Optional: add badges if you want -->
 <!-- ![language](https://img.shields.io/badge/language-python-blue) -->
@@ -10,9 +10,9 @@ mechanisms and performance evaluation.
 ## Team
 | Name | Email | Primary responsibility |
 |---|---|---|
-|  |  |  |
-|  |  |  |
-|  |  |  |
+| Kevin Pol | Kevin_Pol@student.uml.edu | Opt.1 RDT2.2 packet format, and sender/reciever logic |
+| Odey Khello | Odey_Khello@student.uml.edu | Opt.2 ACK bit error injection for sender |
+| Andrew Thach | Andrew_Thach@student.uml.edu | Opt.3 Data packet bit injection for receiver and the plot  |
 
 ## Demo Video (submission)
 - **Private YouTube link:** *(submit via Blackboard)*  
@@ -28,6 +28,7 @@ src/        # sender, receiver, protocol utilities
 scripts/    # experiment runner, plotting utilities
 docs/       # design documents and diagrams
 results/    # CSV + plots generated from experiments
+input       #input test file
 README.md
 ```
 
@@ -94,22 +95,40 @@ python src/sender.py --host 127.0.0.1 --port 9000 --file data/sample.jpg --seed 
 ## Required Demo Scenarios (Current Phase)
 Provide the exact commands used to demonstrate each required scenario.
 
-### Scenario 1: __________
+### Scenario 1: ___Option 1_______
 Receiver:
-```bash
-...
-```
+cd src
+python server_rdt22.py
+
 Sender:
-```bash
-...
-```
+cd src
+python client_rdt22.py ..\input\bmp_24.bmp
+
 Expected behavior:
-- ...
+- File will transfer with no errors and a recieved.bmp will come to file and match the input file
 
-### Scenario 2: __________
-...
+### Scenario 2: __Option 2________
+Receiver:
+cd src
+python server_rdt22.py
 
----
+Sender:
+cd src
+python client_rdt22_option2.py ..\input\bmp_24.bmp
+
+Expected behavior:
+- Sender will corrupt some ack packets and find some wrong checksum and complete the transfer which will match the original file
+### Scenario 3: __Option 3________
+Receiver:
+cd src
+python server_rdt22_option3.py
+
+Sender:
+cd src
+python client_rdt22.py ..\input\bmp_24.bmp
+
+Expected behavior:
+- Reciever will corrupt some packets on data and the resend to ack and complete the transfer that matches the original
 
 ## Figures / Plots (if required by phase)
 ### Reproduce experiment runs
@@ -129,12 +148,15 @@ python scripts/plot_results.py --in results/phase4.csv --out results/phase4.png
 ### Results files
 - `results/phaseX.csv`
 - `results/phaseX.png`
-
+- 'recieved.bmp'
 ---
 
 ## Known Issues / Limitations
 List any limitations honestly.
-
+- Stop and wait are only use
+- port number were mixed up becuase teammates used different which held us back a bit
+- spacing was always an issue for us
+- this works with 1 client at a time
 ---
 
 ## Academic Integrity / External Tools
