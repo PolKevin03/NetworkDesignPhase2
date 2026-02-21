@@ -5,9 +5,9 @@
 
 **Team Name:**  
 **Members:** (Kevin Pol, Kevin_Pol@student.uml.edu)  
-**GitHub Repo URL (with GitHub usernames):** PolKevin03  
+**GitHub Repo URL (with GitHub usernames):** https://github.com/PolKevin03/NetworkDesignPhase2.git  PolKevin03, odeyxx, AndrewThach
 **Phase:** (2)  
-**Submission Date:*2/13/2026*  
+**Submission Date:*2/20/2026*  
 **Version:** (v1)
 
 ---
@@ -22,9 +22,13 @@
 ### 1.1 Demo deliverable N/A
 You will submit a **screen recording** demonstrating the required scenarios.
 
-- **Private YouTube link:** N/A  *(fill in at submission time)*  
+- **Private YouTube link:**   *https://www.youtube.com/watch?v=PT7XSCxJzPw*  
   - Link:
   - Timestamped outline (mm:ss → scenario name):
+  - 00:00 to 00:30 →option 1
+  - 00:31 to 01:17  →option 2
+  - 01:18 to 1:54 →option 3
+
 
 ### 1.2 Required demo scenarios
 Fill in the scenarios required by the phase spec.
