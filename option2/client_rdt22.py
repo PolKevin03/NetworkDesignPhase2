@@ -3,29 +3,29 @@ import random
 import struct
 import zlib
 
-# packet type constants
-DATA = 0
+
+DATA = 0 #packet type
 ACK = 1
 END = 2
 
-# header format: type(1), seq(1), length(2), checksum(4)
-HEADER_FMT = "!BBHI"
+
+HEADER_FMT = "!BBHI" #header format
 HEADER_LEN = struct.calcsize(HEADER_FMT)
 
 def compute_checksum(data_bytes):
     return zlib.crc32(data_bytes) & 0xffffffff  # crc32 checksum
 
 def make_packet(ptype, seq, payload=b""):
-    length = len(payload)  # payload size
-    checksum = 0  # temporary checksum
+    length = len(payload)  #payload size
+    checksum = 0  #checksum
     header = struct.pack(HEADER_FMT, ptype, seq, length, checksum)
-    checksum = compute_checksum(header + payload)  # compute checksum
+    checksum = compute_checksum(header + payload)  #checksum
     header = struct.pack(HEADER_FMT, ptype, seq, length, checksum)
     return header + payload  # full packet
 
 def parse_packet(packet_bytes):
     if len(packet_bytes) < HEADER_LEN:
-        return None, None, b"", True  # invalid packet
+        return None, None, b"", True  #wrong packet
 
     header = packet_bytes[:HEADER_LEN]
     payload = packet_bytes[HEADER_LEN:]
@@ -44,7 +44,7 @@ def corrupt_one_bit(packet_bytes):
         return packet_bytes
     ba = bytearray(packet_bytes)
     i = random.randrange(len(ba))
-    ba[i] ^= (1 << random.randrange(8))  # flip 1 bit
+    ba[i] ^= (1 << random.randrange(8))  #flip 1 bit
     return bytes(ba)
 
 def maybe_corrupt_ack_at_sender(ack_packet, ack_error_rate):
@@ -55,7 +55,7 @@ def maybe_corrupt_ack_at_sender(ack_packet, ack_error_rate):
         injected = True
     return ack_packet, injected
 
-# usage: python client_rdt22_option2.py file.bmp [ack_error_rate 0..1] [seed]
+#prints this
 if len(sys.argv) < 2:
     print("Usage: python client_rdt22_option2.py file.bmp [ack_error_rate 0..1] [seed]")
     sys.exit(1)
@@ -65,24 +65,24 @@ ack_error_rate = float(sys.argv[2]) if len(sys.argv) >= 3 else 0.0
 seed = int(sys.argv[3]) if len(sys.argv) >= 4 else None
 
 if seed is not None:
-    random.seed(seed)  # set seed for repeatable tests
+    random.seed(seed) #set seed to do multiple tests
 
 serverName = "localhost"
 serverPort = 13000
 CHUNK = 1024
 
-clientSocket = socket(AF_INET, SOCK_DGRAM)  # create udp socket
-clientSocket.settimeout(1)  # timeout for resend
+clientSocket = socket(AF_INET, SOCK_DGRAM)  #create udp socket
+clientSocket.settimeout(1)  #break to resend
 
-seq = 0  # start sequence number
+seq = 0  #start sequence 0
 
-acks_injected = 0
-retransmissions = 0
-chunks_sent = 0
+acks_injected =0
+retransmissions =0
+chunks_sent =0
 
 with open(file_path, "rb") as f:
     while True:
-        data = f.read(CHUNK)  # read file chunk
+        data = f.read(CHUNK)#read file
         if not data:
             break
 
@@ -90,30 +90,30 @@ with open(file_path, "rb") as f:
         chunks_sent += 1
 
         while True:
-            clientSocket.sendto(packet, (serverName, serverPort))  # send packet
+            clientSocket.sendto(packet, (serverName, serverPort)) #send packet
 
             try:
                 ack_packet, _ = clientSocket.recvfrom(2048)
 
-                # option 2 injection happens here
+                #option 2 injection happens here
                 ack_packet, injected = maybe_corrupt_ack_at_sender(ack_packet, ack_error_rate)
                 if injected:
                     acks_injected += 1
 
                 ptype, ack_seq, _, corrupt = parse_packet(ack_packet)
 
-                # correct ack
+                #correct ack
                 if not corrupt and ptype == ACK and ack_seq == seq:
                     seq = 1 - seq  # toggle sequence
                     break
 
                 retransmissions += 1  # resend
-
+                
             except timeout:
                 retransmissions += 1
                 continue
 
-# send end packet
+#send end packet
 endpkt = make_packet(END, seq, b"")
 
 while True:
@@ -124,17 +124,17 @@ while True:
 
         ack_packet, injected = maybe_corrupt_ack_at_sender(ack_packet, ack_error_rate)
         if injected:
-            acks_injected += 1
+            acks_injected+= 1
 
         ptype, ack_seq, _, corrupt = parse_packet(ack_packet)
 
-        if not corrupt and ptype == ACK and ack_seq == seq:
+        if not corrupt and ptype == ACK and ack_seq ==seq:
             break
 
-        retransmissions += 1
+        retransmissions+= 1
 
     except timeout:
-        retransmissions += 1
+        retransmissions+= 1
         continue
 
 clientSocket.close()
