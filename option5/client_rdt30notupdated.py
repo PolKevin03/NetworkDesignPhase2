@@ -3,12 +3,10 @@ import sys
 import struct
 import zlib
 
-# packet types
 DATA = 0
 ACK = 1
 END = 2
 
-# header format
 HEADER_FMT = "!BBHI"
 HEADER_LEN = struct.calcsize(HEADER_FMT)
 
@@ -80,7 +78,6 @@ with open(sys.argv[1], "rb") as f:
                 retransmissions += 1
                 continue
 
-# END packet
 endpkt = make_packet(END, seq, b"")
 
 while True:
