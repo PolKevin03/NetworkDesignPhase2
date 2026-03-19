@@ -5,8 +5,7 @@ import csv
 FILE = "../input/bmp_24.bmp"
 
 rates = [0.0, 0.25, 0.5, 0.75, 0.9]
-trials = 2   # keep small so it runs fast
-
+trials = 2   
 results = []
 
 def run_option4(rate):
