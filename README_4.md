@@ -1,4 +1,4 @@
-# Network Design Project – Team ____
+# Network Design Project – Team __KOA__
 
 <!-- Optional: add badges if you want -->
 <!-- ![language](https://img.shields.io/badge/language-python-blue) -->
