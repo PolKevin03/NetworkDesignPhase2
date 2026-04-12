@@ -1,7 +1,5 @@
-# Network Design Project – Team ____
-
-<!-- Optional: add badges if you want -->
-<!-- ![language](https://img.shields.io/badge/language-python-blue) -->
+# Network Design Project – Team __KOA__
+Phase 4
 
 ## Overview
 This repository implements a UDP/TCP-based file transfer protocol across **6 phases**, progressively adding reliability 
